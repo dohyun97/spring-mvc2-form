@@ -19,6 +19,7 @@ public class FormItemController {
 
     private final ItemRepository itemRepository;
 
+
     @GetMapping
     public String items(Model model) {
         List<Item> items = itemRepository.findAll();
@@ -29,6 +30,7 @@ public class FormItemController {
     @GetMapping("/{itemId}")
     public String item(@PathVariable long itemId, Model model) {
         Item item = itemRepository.findById(itemId);
+        log.info("item.open= {}",item.getOpen());
         model.addAttribute("item", item);
         return "form/item";
     }
@@ -42,7 +44,7 @@ public class FormItemController {
     @PostMapping("/add")
     public String addItem(@ModelAttribute Item item, RedirectAttributes redirectAttributes) {
         //To check open variable can pass
-        log.info("item.opem= {}",item.getOpen());
+       // log.info("item.opem= {}",item.getOpen());
 
         Item savedItem = itemRepository.save(item);
         redirectAttributes.addAttribute("itemId", savedItem.getId());
